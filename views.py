@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 import requests
 from wackan.ckan_search import CkanSearch
 
 
 # Create your views here.
+@cache_page(60 * 15)  # Cache the view for 15 minutes
 def dcat(request, name, format):
     """
     Fetches and returns the RDF representation of a dataset from a CKAN instance.
